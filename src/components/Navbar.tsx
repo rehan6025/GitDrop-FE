@@ -1,6 +1,3 @@
-import PillNav from "./PillNav";
-import logo from "../assets/logo.png";
-
 const Navbar = () => {
     return (
         <header
@@ -74,30 +71,6 @@ const Navbar = () => {
                             flexShrink: 0,
                         }}
                     />
-
-                    {/*
-                      PillNav uses `absolute top-[1em]` internally on its outer wrapper.
-                      We compensate by pushing this container down by that same 1em so the
-                      pills visually sit centered in the header.
-                    */}
-                    <div style={{ marginLeft: "1em" }}>
-                        <PillNav
-                            logo={logo}
-                            logoAlt="GIT-Drop"
-                            items={[
-                                { label: "Home", href: "/" },
-                                { label: "Deploy", href: "/deploy" },
-                                { label: "Login", href: "/login" },
-                            ]}
-                            activeHref="/"
-                            ease="power2.out"
-                            baseColor="#000000"
-                            pillColor="#ffffff"
-                            hoveredPillTextColor="#ffffff"
-                            pillTextColor="#000000"
-                            initialLoadAnimation={false}
-                        />
-                    </div>
                 </div>
 
                 {/* Right: status badge */}
