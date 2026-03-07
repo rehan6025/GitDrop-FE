@@ -1,16 +1,24 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import Dashboard from "./pages/Dashboard";
+import Deploy from "./pages/Deploy";
+import Login from "./pages/Login";
+
 function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Welcome to React
-        </h1>
-        <p className="text-gray-600">
-          Edit <code className="bg-gray-200 px-2 py-1 rounded">src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    </div>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* pages with navbar */}
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/deploy" element={<Deploy />} />
+                </Route>
+
+                {/* pages without navbar */}
+                <Route path="/login" element={<Login />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;

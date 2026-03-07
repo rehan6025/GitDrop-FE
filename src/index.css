@@ -1,1 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
+
+@font-face {
+    font-family: "DogicaPixel";
+    src: url("./assets/fonts/dogicapixel.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "DogicaPixel";
+    src: url("./assets/fonts/dogicapixelbold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@import "tailwindcss";
+
+@theme {
+    --animate-dash-flow: dashFlow 2s linear infinite;
+
+    @keyframes dashFlow {
+        to {
+            stroke-dashoffset: -20;
+        }
+    }
+}
+
+@theme {
+    --font-dogica: "DogicaPixel", monospace;
+}
+
+/* @theme {
+  --font-dogica: "DogicaPixel", monospace;
+} */
