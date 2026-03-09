@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Deploy from "./pages/Deploy";
-import Login from "./pages/Login";
 
 function App() {
     return (
@@ -14,8 +13,8 @@ function App() {
                     <Route path="/deploy" element={<Deploy />} />
                 </Route>
 
-                {/* pages without navbar */}
-                <Route path="/login" element={<Login />} />
+                {/* route to catch other routes which dont exist */}
+                <Route path="*" element={<div>404 - Page Not Found</div>} />
             </Routes>
         </BrowserRouter>
     );
