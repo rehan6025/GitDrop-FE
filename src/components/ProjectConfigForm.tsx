@@ -2,6 +2,8 @@ interface ProjectConfigFormProps {
     projectName: string;
     projectUrl: string;
     projectType: "REACT" | "STATIC";
+    buildCommand: string;
+    onBuildCommandChange: (command: string) => void;
     onProjectNameChange: (name: string) => void;
     onProjectUrlChange: (url: string) => void;
     onProjectTypeChange: (type: "REACT" | "STATIC") => void;
@@ -11,6 +13,8 @@ const ProjectConfigForm = ({
     projectName,
     projectUrl,
     projectType,
+    buildCommand,
+    onBuildCommandChange,
     onProjectNameChange,
     onProjectUrlChange,
     onProjectTypeChange,
@@ -86,6 +90,27 @@ const ProjectConfigForm = ({
                     ))}
                 </div>
             </div>
+
+            {/* Build Command (React only) */}
+            {projectType === "REACT" && (
+                <div className="mt-6">
+                    <span className="text-sm text-emerald-400">$ </span>
+                    <p className="inline font-dogica text-xs text-emerald-400">
+                        build command
+                    </p>
+
+                    <input
+                        value={buildCommand}
+                        onChange={(e) => onBuildCommandChange(e.target.value)}
+                        placeholder="npm run build"
+                        className="mt-2 w-full bg-black border border-neutral-800 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    />
+
+                    <p className="text-[10px] text-neutral-500 mt-1">
+                        command used to build your React project
+                    </p>
+                </div>
+            )}
         </>
     );
 };

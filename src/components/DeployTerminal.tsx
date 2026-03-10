@@ -15,6 +15,9 @@ interface DeployTerminalProps {
     projectName: string;
     projectUrl: string;
     projectType: "REACT" | "STATIC";
+    buildCommmand: string;
+    onBuildCommandChange: (command: string) => void;
+
     onBranchSelect: (branchName: string) => void;
     onProjectNameChange: (name: string) => void;
     onProjectUrlChange: (url: string) => void;
@@ -29,6 +32,8 @@ const DeployTerminal = ({
     projectName,
     projectUrl,
     projectType,
+    buildCommmand,
+    onBuildCommandChange,
     onBranchSelect,
     onProjectNameChange,
     onProjectUrlChange,
@@ -53,6 +58,8 @@ const DeployTerminal = ({
                     projectName={projectName}
                     projectUrl={projectUrl}
                     projectType={projectType}
+                    buildCommand={buildCommmand}
+                    onBuildCommandChange={onBuildCommandChange}
                     onProjectNameChange={onProjectNameChange}
                     onProjectUrlChange={onProjectUrlChange}
                     onProjectTypeChange={onProjectTypeChange}

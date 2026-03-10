@@ -14,6 +14,12 @@ export interface Repository {
     };
 }
 
+export interface User {
+    id: string;
+    githubId: string;
+    username: string;
+}
+
 export interface Branch {
     name: string;
     sha: string;
@@ -26,6 +32,7 @@ export interface DeploymentData {
     type: "STATIC" | "REACT";
     commitHash?: string;
     buildCommand?: string;
+    url: string;
 }
 
 export interface DeploymentResponse {
@@ -56,15 +63,31 @@ export const api = {
         loginWithGitHub: () => {
             window.location.href = `${API_BASE_URL}/auth/github`;
         },
-        checkAuth: async (): Promise<boolean> => {
+        // checkAuth: async (): Promise<boolean> => {
+        //     try {
+        //         const response = await fetch(`${API_BASE_URL}/github/repos`, {
+        //             credentials: "include",
+        //         });
+        //         return response.ok;
+        //     } catch {
+        //         return false;
+        //     }
+        // },
+        me: async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/github/repos`, {
+                const res = await fetch(`${API_BASE_URL}/auth/me`, {
                     credentials: "include",
                 });
-                return response.ok;
+                return res.ok;
             } catch {
                 return false;
             }
+        },
+        logout: async () => {
+            await fetch(`${API_BASE_URL}/auth/logout`, {
+                method: "POST",
+                credentials: "include",
+            });
         },
     },
 
