@@ -1,40 +1,25 @@
-import { api } from "@/api/api";
 import {
     Navbar,
     NavBody,
     NavItems,
     NavbarButton,
 } from "@/components/ui/resizable-navbar";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/auth/auth";
 
 const navItems = [
-    { name: "Dashboard", link: "/" },
+    { name: "Dashboard", link: "/dashboard" },
     { name: "Deploy", link: "/deploy" },
 ];
 
 export default function AppNavbar() {
-    const [loggedIn, setloggedIn] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const user = await api.auth.me();
-                if (user) {
-                    setloggedIn(true);
-                }
-            } catch (err) {
-                setloggedIn(false);
-                navigate("/");
-            }
-        };
-        checkAuth();
-    }, []);
+    const { status, logout } = useAuth();
+    const loggedIn = status === "authenticated";
 
     return (
         <Navbar className="border-neutral-800 ">
-            <NavBody className="max-w-7xl   mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <NavBody className="max-w-7xl bg  mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <div className="font-dogica text-lg">GitDrop</div>
 
@@ -47,20 +32,18 @@ export default function AppNavbar() {
                 {/* Login Button */}
                 {loggedIn ? (
                     <NavbarButton
-                        as={Link}
                         onClick={async () => {
-                            await api.auth.logout();
-                            setloggedIn(false);
+                            await logout();
+                            navigate("/login");
                         }}
                     >
                         Logout
                     </NavbarButton>
                 ) : (
                     <NavbarButton
-                        as={Link}
                         className="bg-white text-black px-4 py-2 text-sm font-medium rounded-md"
                         onClick={() => {
-                            api.auth.loginWithGitHub();
+                            navigate("/login");
                         }}
                     >
                         Login With Github

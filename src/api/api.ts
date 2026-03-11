@@ -25,6 +25,21 @@ export interface Branch {
     sha: string;
 }
 
+export type ProjectStatus = "PENDING" | "BUILDING" | "SUCCESS" | "FAILED";
+
+export interface Project {
+    id: string;
+    name: string;
+    user_id: string;
+    repoUrl: string;
+    url: string;
+    branch: string;
+    type: "STATIC" | "REACT";
+    status: ProjectStatus;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface DeploymentData {
     name: string;
     repoUrl: string;
@@ -51,7 +66,8 @@ const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     });
 
     if (response.status === 401) {
-        window.location.href = "/";
+        // Let the SPA decide how to handle this (navigate to /login, show toast, etc.)
+        window.dispatchEvent(new CustomEvent("gitdrop:unauthorized"));
         throw new Error("Unauthorized");
     }
 
@@ -73,7 +89,8 @@ export const api = {
         //         return false;
         //     }
         // },
-        me: async () => {
+        // returns `true` if the current session is authenticated, otherwise `false`
+        me: async (): Promise<boolean> => {
             try {
                 const res = await fetch(`${API_BASE_URL}/auth/me`, {
                     credentials: "include",
@@ -123,6 +140,30 @@ export const api = {
                 throw new Error("Failed to create deployment");
             }
             return response.json();
+        },
+    },
+
+    projects: {
+        getAllProjects: async () => {
+            const res = await fetchWithAuth(`${API_BASE_URL}/projects`);
+
+            if (!res.ok) {
+                throw new Error("Failed to get projects");
+            }
+
+            return res.json();
+        },
+
+        getProjectDeployments: async (projectId: number) => {
+            const res = await fetchWithAuth(
+                `${API_BASE_URL}/projects/${projectId}/deployments`,
+            );
+
+            if (!res.ok) {
+                throw new Error("Failed to get deployments of project");
+            }
+
+            return res.json();
         },
     },
 };
