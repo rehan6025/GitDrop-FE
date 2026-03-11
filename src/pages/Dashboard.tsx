@@ -102,7 +102,7 @@ const Dashboard = () => {
                         return (
                             <div
                                 key={project.id}
-                                className="border border-neutral-800 bg-neutral-950 rounded-lg px-5 py-4 flex items-center justify-between hover:border-neutral-600 transition-all duration-200"
+                                className="border border-neutral-800 bg-neutral-950 rounded-lg px-5 py-4 flex items-center justify-between hover:border-emerald-500  transition-all duration-200"
                             >
                                 {/* Left side */}
                                 <div className="flex items-center gap-4 min-w-0">
