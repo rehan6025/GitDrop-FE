@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import RequireAuth from "./components/RequireAuth";
 import { AuthProvider } from "./auth/auth";
 import { useEffect } from "react";
+import Deployment from "./pages/Deployment";
 
 function UnauthorizedListener() {
     const navigate = useNavigate();
@@ -18,7 +19,8 @@ function UnauthorizedListener() {
         };
 
         window.addEventListener("gitdrop:unauthorized", onUnauthorized);
-        return () => window.removeEventListener("gitdrop:unauthorized", onUnauthorized);
+        return () =>
+            window.removeEventListener("gitdrop:unauthorized", onUnauthorized);
     }, [navigate]);
 
     return null;
@@ -54,6 +56,14 @@ function App() {
                             element={
                                 <RequireAuth>
                                     <DeployConfig />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="deployments/:deploymentId"
+                            element={
+                                <RequireAuth>
+                                    <Deployment />
                                 </RequireAuth>
                             }
                         />

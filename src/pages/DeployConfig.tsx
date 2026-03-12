@@ -2,11 +2,11 @@ import { api, type Branch, type Repository } from "@/api/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DeployTerminal from "@/components/DeployTerminal";
-import DeploymentLog from "@/components/DeploymentLog";
+import { useNavigate } from "react-router-dom";
 
 const DeployConfig = () => {
     const { repoName } = useParams();
-
+    const navigate = useNavigate();
     const [repo, setRepo] = useState<Repository | null>(null);
     const [branches, setBranches] = useState<Branch[]>([]);
     const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
@@ -59,16 +59,9 @@ const DeployConfig = () => {
         if (!repo || !selectedBranch) return;
 
         try {
-            setDeploying(true);
-            setDeployStep(1);
-
-            setTimeout(() => setDeployStep(2), 1500);
-            setTimeout(() => setDeployStep(3), 3000);
-            setTimeout(() => setDeployStep(4), 4500);
-
             const branchObj = branches.find((b) => b.name === selectedBranch);
 
-            await api.deployments.create({
+            const res = await api.deployments.create({
                 name: projectName,
                 repoUrl: repo.html_url,
                 branch: selectedBranch,
@@ -77,6 +70,10 @@ const DeployConfig = () => {
                 buildCommand: buildCommmand,
                 url: projectUrl,
             });
+
+            const deployementId = res.deploymentId;
+
+            navigate(`/deployments/${deployementId}`);
         } catch (err) {
             console.error("Deployment failed", err);
             setDeploying(false);
@@ -112,13 +109,6 @@ const DeployConfig = () => {
                 onProjectTypeChange={setProjectType}
                 onDeploy={handleDeploy}
             />
-
-            {deploying && (
-                <DeploymentLog
-                    deployStep={deployStep}
-                    projectUrl={projectUrl}
-                />
-            )}
         </div>
     );
 };
