@@ -25,10 +25,15 @@ export interface Branch {
     sha: string;
 }
 
-export type ProjectStatus = "PENDING" | "BUILDING" | "SUCCESS" | "FAILED";
+// Project status values mirror backend values:
+// - "CREATED"      -> initial project record created
+// - "IN_PROGRESS"  -> a deployment is currently building
+// - "READY"        -> latest deployment succeeded / project is live
+// - "FAIL"         -> latest deployment failed
+export type ProjectStatus = "CREATED" | "IN_PROGRESS" | "READY" | "FAIL";
 
 export interface Project {
-    id: string;
+    id: number;
     name: string;
     user_id: string;
     repoUrl: string;
@@ -140,6 +145,26 @@ export const api = {
                 throw new Error("Failed to create deployment");
             }
             return response.json();
+        },
+        getLogs: async (deploymentId: number): Promise<string[]> => {
+            const response = await fetchWithAuth(
+                `${API_BASE_URL}/deployment/${deploymentId}/logs`,
+            );
+
+            if (!response.ok) throw new Error("Failed to fetch logs");
+
+            return response.json();
+        },
+        getStatus: async (deploymentId: number): Promise<string> => {
+            const response = await fetchWithAuth(
+                `${API_BASE_URL}/deployment/${deploymentId}/status`,
+            );
+
+            if (!response.ok)
+                throw new Error("Failed to fetch deployment status");
+
+            // backend returns a plain string status like READY / FAIL
+            return response.text();
         },
     },
 

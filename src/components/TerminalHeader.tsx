@@ -1,25 +1,41 @@
 interface TerminalHeaderProps {
     title: string;
-    status?: "running" | "done";
+    status?: "running" | "done" | "error";
 }
 
 const TerminalHeader = ({ title, status }: TerminalHeaderProps) => {
     return (
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-neutral-800">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+        <div className="h-9 flex items-center gap-1.5 px-3 border-b border-neutral-800 bg-neutral-900">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
 
-            <span className="ml-4 text-xs text-neutral-400 font-dogica">
+            <span className="ml-3 text-[11px] text-neutral-500 font-mono">
                 {title}
             </span>
 
             {status && (
-                <span className="ml-auto flex items-center gap-1.5 text-[10px] font-dogica text-neutral-500">
+                <span className="ml-auto flex items-center gap-1.5 text-[10px] font-dogica">
                     <span
-                        className={`w-1.5 h-1.5 rounded-full ${status === "done" ? "bg-emerald-400" : "bg-yellow-400 animate-pulse"}`}
+                        className={`w-1.5 h-1.5 rounded-full ${
+                            status === "done"
+                                ? "bg-emerald-400"
+                                : status === "error"
+                                  ? "bg-red-400"
+                                  : "bg-yellow-400 animate-pulse"
+                        }`}
                     />
-                    {status === "done" ? "done" : "running"}
+                    <span
+                        className={
+                            status === "done"
+                                ? "text-emerald-400"
+                                : status === "error"
+                                  ? "text-red-400"
+                                  : "text-yellow-400"
+                        }
+                    >
+                        {status === "done" ? "complete" : status === "error" ? "error" : "running"}
+                    </span>
                 </span>
             )}
         </div>

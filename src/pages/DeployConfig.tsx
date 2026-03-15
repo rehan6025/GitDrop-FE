@@ -1,6 +1,6 @@
 import { api, type Branch, type Repository } from "@/api/api";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DeployTerminal from "@/components/DeployTerminal";
 import { useNavigate } from "react-router-dom";
 
@@ -15,9 +15,6 @@ const DeployConfig = () => {
     const [projectUrl, setProjectUrl] = useState(repoName || "");
     const [projectType, setProjectType] = useState<"REACT" | "STATIC">("REACT");
     const [buildCommmand, setbuildCommmand] = useState("");
-
-    const [deploying, setDeploying] = useState(false);
-    const [deployStep, setDeployStep] = useState(0);
 
     useEffect(() => {
         const fetchRepoAndBranches = async () => {
@@ -76,23 +73,51 @@ const DeployConfig = () => {
             navigate(`/deployments/${deployementId}`);
         } catch (err) {
             console.error("Deployment failed", err);
-            setDeploying(false);
         }
     };
 
     if (!repo) {
         return (
-            <div className="max-w-6xl mx-auto px-6 py-10 text-white">
-                Loading repository...
+            <div className="text-white max-w-6xl mx-auto px-6 py-10">
+                {/* Loading skeleton */}
+                <div className="mb-8 flex items-center justify-between">
+                    <div>
+                        <div className="h-7 w-48 bg-neutral-800 rounded animate-pulse" />
+                        <div className="h-4 w-32 mt-2 bg-neutral-800 rounded animate-pulse" />
+                    </div>
+                </div>
+                <div className="border border-neutral-800 rounded-lg overflow-hidden">
+                    <div className="h-10 bg-neutral-900 border-b border-neutral-800 animate-pulse" />
+                    <div className="bg-neutral-950 p-6 space-y-4">
+                        {[...Array(4)].map((_, i) => (
+                            <div key={i} className="h-10 bg-neutral-900 rounded animate-pulse" />
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-6 py-10">
-            <h1 className="text-3xl mb-8 font-dogica tracking-wider">
-                Deploy {repo.name}
-            </h1>
+        <div className="text-white max-w-6xl mx-auto px-6 py-10">
+            {/* Header */}
+            <div className="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 className="text-2xl font-dogica tracking-wider">
+                        Deploy {repo.name}
+                    </h1>
+                    <p className="text-neutral-500 text-xs mt-1 font-dogica">
+                        configure your deployment settings
+                    </p>
+                </div>
+
+                <Link
+                    to="/deploy"
+                    className="text-xs font-dogica text-neutral-500 hover:text-white transition-colors"
+                >
+                    ← select different repo
+                </Link>
+            </div>
 
             <DeployTerminal
                 selectedRepo={repo}

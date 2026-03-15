@@ -43,10 +43,25 @@ const DeployTerminal = ({
     const canDeploy = selectedBranch && projectName && projectUrl;
 
     return (
-        <div className="mt-10 border border-neutral-800 text-white bg-neutral-950 rounded-lg mb-5">
-            <TerminalHeader title="GITDROP-TERMINAL" />
+        <div className="border border-neutral-800 rounded-lg overflow-hidden">
+            <TerminalHeader title={`gitdrop deploy ${selectedRepo.name}`} />
 
-            <div className="p-6">
+            <div className="bg-neutral-950 p-6">
+                {/* Repo info bar */}
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-neutral-800">
+                    <span className="text-lg">
+                        {selectedRepo.private ? "🔒" : "📦"}
+                    </span>
+                    <div>
+                        <p className="text-sm text-white font-mono">
+                            {selectedRepo.owner.login}/{selectedRepo.name}
+                        </p>
+                        <p className="text-[10px] text-neutral-500 font-dogica">
+                            {branches.length} branch{branches.length !== 1 ? "es" : ""} available
+                        </p>
+                    </div>
+                </div>
+
                 <BranchSelector
                     branches={branches}
                     selectedBranch={selectedBranch}
@@ -66,20 +81,27 @@ const DeployTerminal = ({
                 />
 
                 {/* Deploy Button */}
-                {selectedBranch && (
+                <div className="mt-8 pt-4 border-t border-neutral-800">
                     <button
                         disabled={!canDeploy}
                         onClick={onDeploy}
-                        className={`mt-6 px-5 py-2 border font-dogica text-xs transition
+                        className={`px-5 py-2.5 border font-dogica text-xs transition-all duration-200 rounded
                         ${
                             canDeploy
-                                ? "border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-black"
+                                ? "border-white/30 text-white hover:bg-white hover:text-black cursor-pointer"
                                 : "border-neutral-700 text-neutral-600 cursor-not-allowed"
                         }`}
                     >
-                        Deploy {selectedRepo.name}
+                        <span className="mr-2">▶</span>
+                        deploy {selectedRepo.name}
                     </button>
-                )}
+
+                    {!canDeploy && (
+                        <p className="text-[10px] text-neutral-600 font-dogica mt-2">
+                            fill in all fields to deploy
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     );

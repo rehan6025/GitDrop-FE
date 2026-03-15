@@ -82,39 +82,31 @@ export const Navbar = ({ children, className }: NavbarProps) => {
 };
 
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
-  // ─── CUSTOMISE YOUR BORDER HERE ───────────────────────────────────────────
-  // The gradient border uses the double-background trick:
-  //   Layer 1 (padding-box): solid fill = your navbar background
-  //   Layer 2 (border-box):  the glowing gradient that peeks through the border gap
-  //
-  // If your app is dark-themed, change these to e.g. "#0d0d0d" / "rgba(13,13,13,0.85)"
-  // If light-themed, keep "#ffffff" / "rgba(255,255,255,0.85)"
-  const bgSolid = "#ffffff";
-  const bgFloating = "rgba(255,255,255,0.85)";
+  // Dark theme navbar colors
+  const bgSolid = "#0a0a0a";
+  const bgFloating = "rgba(10,10,10,0.9)";
 
-  // The gradient that draws the glowing border line.
-  // Swap rgba(0,0,0,...) for rgba(255,255,255,...) on dark backgrounds.
+  // Subtle white border for dark mode
   const borderGradient = `
     linear-gradient(
       90deg,
       transparent        0%,
-      rgba(0,0,0,0.12)  15%,
-      rgba(0,0,0,0.85)  50%,
-      rgba(0,0,0,0.12)  85%,
+      rgba(255,255,255,0.1)  20%,
+      rgba(255,255,255,0.3)  50%,
+      rgba(255,255,255,0.1)  80%,
       transparent       100%
     )
   `;
-  // ──────────────────────────────────────────────────────────────────────────
 
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(10px)" : "none",
+        backdropFilter: visible ? "blur(12px)" : "none",
         boxShadow: visible
-          ? "0 0 24px rgba(34,42,53,0.06), 0 1px 1px rgba(0,0,0,0.05), 0 16px 68px rgba(47,48,55,0.05)"
+          ? "0 4px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)"
           : "none",
-        width: visible ? "40%" : "100%",
-        y: visible ? 20 : 0,
+        width: visible ? "50%" : "100%",
+        y: visible ? 16 : 0,
       }}
       transition={{
         type: "spring",
@@ -122,15 +114,14 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         damping: 50,
       }}
       style={{
-        minWidth: "800px",
-        // Gradient border trick — must NOT use Tailwind bg classes on this element
+        minWidth: "600px",
         border: "1px solid transparent",
         backgroundImage: `linear-gradient(${visible ? bgFloating : bgSolid}, ${visible ? bgFloating : bgSolid}), ${borderGradient}`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-4 py-2 lg:flex",
+        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-6 py-2.5 lg:flex",
         className,
       )}
     >
@@ -146,7 +137,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 lg:flex",
         className,
       )}
     >
@@ -154,14 +145,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <Link
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+          className="relative px-4 py-2 text-neutral-500 hover:text-white transition-colors font-dogica text-xs tracking-wider"
           key={`link-${idx}`}
           to={item.link}
         >
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+              className="absolute inset-0 h-full w-full rounded-full bg-white/10"
             />
           )}
           <span className="relative z-20">{item.name}</span>
@@ -172,15 +163,15 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
 };
 
 export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
-  const bgSolid = "#ffffff";
-  const bgFloating = "rgba(255,255,255,0.85)";
+  const bgSolid = "#0a0a0a";
+  const bgFloating = "rgba(10,10,10,0.9)";
   const borderGradient = `
     linear-gradient(
       90deg,
       transparent        0%,
-      rgba(0,0,0,0.12)  15%,
-      rgba(0,0,0,0.85)  50%,
-      rgba(0,0,0,0.12)  85%,
+      rgba(255,255,255,0.1)  20%,
+      rgba(255,255,255,0.3)  50%,
+      rgba(255,255,255,0.1)  80%,
       transparent       100%
     )
   `;
@@ -188,15 +179,15 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(10px)" : "none",
+        backdropFilter: visible ? "blur(12px)" : "none",
         boxShadow: visible
-          ? "0 0 24px rgba(34,42,53,0.06), 0 1px 1px rgba(0,0,0,0.05), 0 16px 68px rgba(47,48,55,0.05)"
+          ? "0 4px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)"
           : "none",
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "4px" : "9999px",
-        y: visible ? 20 : 0,
+        borderRadius: visible ? "8px" : "9999px",
+        y: visible ? 16 : 0,
       }}
       transition={{
         type: "spring",
@@ -249,7 +240,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
+            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-neutral-950 border border-neutral-800 px-4 py-8 shadow-2xl",
             className,
           )}
         >
@@ -308,15 +299,13 @@ export const NavbarButton = ({
   variant?: "primary" | "secondary" | "dark" | "gradient";
 } & Record<string, unknown>) => {
   const baseStyles =
-    "px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 rounded-md text-sm font-dogica text-xs tracking-wider relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
   const variantStyles = {
-    primary:
-      "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
-    secondary: "bg-transparent shadow-none dark:text-white",
-    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
-    gradient:
-      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+    primary: "bg-white text-black hover:bg-neutral-200",
+    secondary: "bg-transparent text-white border border-white/20 hover:bg-white/10",
+    dark: "bg-neutral-900 text-white border border-neutral-700 hover:border-neutral-500",
+    gradient: "bg-white text-black hover:bg-neutral-100",
   };
 
   const tagProps: Record<string, unknown> = {

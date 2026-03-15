@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
+import Project from "./pages/Project";
 import Deploy from "./pages/Deploy";
 import DeployConfig from "./pages/DeployConfig";
 import Login from "./pages/Login";
@@ -40,6 +41,14 @@ function App() {
                             element={
                                 <RequireAuth>
                                     <Dashboard />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="projects/:projectId"
+                            element={
+                                <RequireAuth>
+                                    <Project />
                                 </RequireAuth>
                             }
                         />

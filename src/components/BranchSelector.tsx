@@ -17,25 +17,33 @@ const BranchSelector = ({
     onSelect,
 }: BranchSelectorProps) => {
     return (
-        <div>
-            <span className="text-sm text-emerald-400">$ </span>
-            <p className="inline font-dogica text-xs text-emerald-400 mb-4">
-                select branch for {repoName}
-            </p>
+        <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+                <span className="text-white/60 font-mono text-sm">$</span>
+                <span className="font-dogica text-xs text-neutral-400">
+                    select branch for <span className="text-white">{repoName}</span>
+                </span>
+            </div>
 
-            <div className="space-y-2 mb-6">
+            <div className="space-y-2">
                 {branches.map((branch) => (
                     <button
                         key={branch.name}
                         onClick={() => onSelect(branch.name)}
-                        className={`w-full text-left px-3 py-2 text-sm border rounded
+                        className={`w-full text-left px-4 py-2.5 text-sm border rounded transition-all duration-200 font-mono
                         ${
                             selectedBranch === branch.name
-                                ? "border-emerald-500 bg-emerald-500/10"
-                                : "border-neutral-800 hover:bg-neutral-900"
+                                ? "border-white/30 bg-white/5 text-white"
+                                : "border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-neutral-300"
                         }`}
                     >
-                        🌿 {branch.name}
+                        <span className="text-neutral-500">⎇</span>{" "}
+                        {branch.name}
+                        {branch.sha && (
+                            <span className="text-neutral-600 text-xs ml-2">
+                                ({branch.sha.slice(0, 7)})
+                            </span>
+                        )}
                     </button>
                 ))}
             </div>
