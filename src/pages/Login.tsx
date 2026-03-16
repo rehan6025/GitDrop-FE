@@ -133,7 +133,7 @@ const Login = () => {
 
                 {/* Version/branding */}
                 <p className="text-center text-muted-foreground/50 text-xs font-dogica mt-6 tracking-wider">
-                    v1.0.0
+                    gitdrop v1.0.0
                 </p>
             </div>
         </div>

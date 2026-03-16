@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth";
 import { AuthProvider } from "./auth/auth";
 import { useEffect } from "react";
 import Deployment from "./pages/Deployment";
+import NotFound from "./pages/NotFound";
 
 function UnauthorizedListener() {
     const navigate = useNavigate();
@@ -82,7 +83,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
 
                     {/* route to catch other routes which dont exist */}
-                    <Route path="*" element={<div>404 - Page Not Found</div>} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
