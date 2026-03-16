@@ -24,7 +24,7 @@ const Deploy = () => {
     }, []);
 
     return (
-        <div className="text-white max-w-6xl mx-auto px-6 py-10">
+        <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
             {/* Header */}
             <div className="mb-8 flex items-center justify-between">
                 <div>
@@ -38,7 +38,7 @@ const Deploy = () => {
 
                 <Link
                     to="/dashboard"
-                    className="text-xs font-dogica text-neutral-500 hover:text-white transition-colors"
+                    className="text-xs font-dogica text-neutral-500 hover:text-foreground transition-colors"
                 >
                     ← back to dashboard
                 </Link>
@@ -50,7 +50,7 @@ const Deploy = () => {
                     {[...Array(4)].map((_, i) => (
                         <div
                             key={i}
-                            className="h-20 rounded-lg border border-neutral-800 bg-neutral-950 animate-pulse"
+                            className="h-20 rounded-lg border border-border bg-card animate-pulse"
                         />
                     ))}
                 </div>
@@ -58,7 +58,7 @@ const Deploy = () => {
 
             {/* Empty state */}
             {!loading && repos.length === 0 && (
-                <div className="border border-dashed border-neutral-800 rounded-lg p-12 text-center">
+                <div className="border border-dashed border-border rounded-lg p-12 text-center">
                     <p className="text-neutral-600 font-dogica text-xs">
                         no repositories found — connect your github account
                     </p>

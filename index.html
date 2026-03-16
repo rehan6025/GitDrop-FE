@@ -9,6 +9,22 @@
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>git-drop-frontend</title>
+        <script>
+            (() => {
+                try {
+                    const stored = localStorage.getItem("theme"); // "light" | "dark" | "system" | null
+                    const prefersDark =
+                        window.matchMedia &&
+                        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+                    const shouldUseDark =
+                        stored === "dark" || (stored !== "light" && stored !== "dark" && prefersDark);
+
+                    document.documentElement.classList.toggle("dark", shouldUseDark);
+                } catch {
+                }
+            })();
+        </script>
     </head>
     <body>
         <div id="root"></div>

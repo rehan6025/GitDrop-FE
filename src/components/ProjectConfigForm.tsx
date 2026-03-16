@@ -24,7 +24,9 @@ const ProjectConfigForm = ({
             {/* Project Name */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <span className="text-white/60 font-mono text-sm">$</span>
+                    <span className="text-muted-foreground/80 font-mono text-sm">
+                        $
+                    </span>
                     <span className="font-dogica text-xs text-neutral-400">
                         project name
                     </span>
@@ -33,14 +35,16 @@ const ProjectConfigForm = ({
                     value={projectName}
                     onChange={(e) => onProjectNameChange(e.target.value)}
                     placeholder="my-project"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded px-3 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-neutral-500 transition-colors"
+                    className="w-full bg-background border border-border rounded px-3 py-2.5 text-sm text-foreground font-mono focus:outline-none focus:border-ring transition-colors"
                 />
             </div>
 
             {/* Project URL */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <span className="text-white/60 font-mono text-sm">$</span>
+                    <span className="text-muted-foreground/80 font-mono text-sm">
+                        $
+                    </span>
                     <span className="font-dogica text-xs text-neutral-400">
                         project url
                     </span>
@@ -50,9 +54,9 @@ const ProjectConfigForm = ({
                         value={projectUrl}
                         onChange={(e) => onProjectUrlChange(e.target.value)}
                         placeholder="my-project"
-                        className="flex-1 bg-neutral-950 border border-neutral-800 border-r-0 rounded-l px-3 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-neutral-500 transition-colors"
+                        className="flex-1 bg-background border border-border border-r-0 rounded-l px-3 py-2.5 text-sm text-foreground font-mono focus:outline-none focus:border-ring transition-colors"
                     />
-                    <span className="px-3 py-2.5 border border-neutral-800 rounded-r text-xs font-mono text-neutral-500 bg-neutral-900">
+                    <span className="px-3 py-2.5 border border-border rounded-r text-xs font-mono text-muted-foreground bg-muted">
                         .gitdrop.dev
                     </span>
                 </div>
@@ -66,7 +70,9 @@ const ProjectConfigForm = ({
             {/* Project Type */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <span className="text-white/60 font-mono text-sm">$</span>
+                    <span className="text-muted-foreground/80 font-mono text-sm">
+                        $
+                    </span>
                     <span className="font-dogica text-xs text-neutral-400">
                         project type
                     </span>
@@ -79,8 +85,8 @@ const ProjectConfigForm = ({
                             className={`flex-1 px-4 py-3 border rounded transition-all duration-200
                             ${
                                 projectType === type
-                                    ? "border-white/30 bg-white/5"
-                                    : "border-neutral-800 hover:border-neutral-600"
+                                    ? "border-border bg-muted"
+                                    : "border-border hover:bg-muted/50"
                             }`}
                         >
                             <span className="block text-lg mb-1">
@@ -89,8 +95,8 @@ const ProjectConfigForm = ({
                             <span
                                 className={`block text-xs font-dogica ${
                                     projectType === type
-                                        ? "text-white"
-                                        : "text-neutral-400"
+                                        ? "text-foreground"
+                                        : "text-muted-foreground"
                                 }`}
                             >
                                 {type === "REACT" ? "React" : "Static"}
@@ -113,7 +119,9 @@ const ProjectConfigForm = ({
             {projectType === "REACT" && (
                 <div>
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="text-white/60 font-mono text-sm">$</span>
+                        <span className="text-muted-foreground/80 font-mono text-sm">
+                            $
+                        </span>
                         <span className="font-dogica text-xs text-neutral-400">
                             build command
                         </span>
@@ -122,7 +130,7 @@ const ProjectConfigForm = ({
                         value={buildCommand}
                         onChange={(e) => onBuildCommandChange(e.target.value)}
                         placeholder="npm run build"
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded px-3 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-neutral-500 transition-colors"
+                        className="w-full bg-background border border-border rounded px-3 py-2.5 text-sm text-foreground font-mono focus:outline-none focus:border-ring transition-colors"
                     />
                     <p className="text-[10px] text-neutral-600 font-mono mt-2">
                         command executed during deployment

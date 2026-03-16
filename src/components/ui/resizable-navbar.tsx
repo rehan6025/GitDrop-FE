@@ -82,29 +82,10 @@ export const Navbar = ({ children, className }: NavbarProps) => {
 };
 
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
-  // Dark theme navbar colors
-  const bgSolid = "#0a0a0a";
-  const bgFloating = "rgba(10,10,10,0.9)";
-
-  // Subtle white border for dark mode
-  const borderGradient = `
-    linear-gradient(
-      90deg,
-      transparent        0%,
-      rgba(255,255,255,0.1)  20%,
-      rgba(255,255,255,0.3)  50%,
-      rgba(255,255,255,0.1)  80%,
-      transparent       100%
-    )
-  `;
-
   return (
     <motion.div
       animate={{
         backdropFilter: visible ? "blur(12px)" : "none",
-        boxShadow: visible
-          ? "0 4px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)"
-          : "none",
         width: visible ? "50%" : "100%",
         y: visible ? 16 : 0,
       }}
@@ -113,15 +94,10 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         stiffness: 200,
         damping: 50,
       }}
-      style={{
-        minWidth: "600px",
-        border: "1px solid transparent",
-        backgroundImage: `linear-gradient(${visible ? bgFloating : bgSolid}, ${visible ? bgFloating : bgSolid}), ${borderGradient}`,
-        backgroundOrigin: "border-box",
-        backgroundClip: "padding-box, border-box",
-      }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-6 py-2.5 lg:flex",
+        "relative z-60 mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-6 py-2.5 lg:flex",
+        "bg-background/95 border border-border",
+        visible && "shadow-lg",
         className,
       )}
     >
@@ -137,7 +113,8 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 lg:flex",
+        // Keep this in normal flex flow so it never overlaps right-side controls
+        "hidden flex-1 flex-row items-center justify-center space-x-1 lg:flex",
         className,
       )}
     >
@@ -145,14 +122,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <Link
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-500 hover:text-white transition-colors font-dogica text-xs tracking-wider"
+          className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors font-dogica text-xs tracking-wider"
           key={`link-${idx}`}
           to={item.link}
         >
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-white/10"
+              className="absolute inset-0 h-full w-full rounded-full bg-foreground/10"
             />
           )}
           <span className="relative z-20">{item.name}</span>
@@ -163,26 +140,10 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
 };
 
 export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
-  const bgSolid = "#0a0a0a";
-  const bgFloating = "rgba(10,10,10,0.9)";
-  const borderGradient = `
-    linear-gradient(
-      90deg,
-      transparent        0%,
-      rgba(255,255,255,0.1)  20%,
-      rgba(255,255,255,0.3)  50%,
-      rgba(255,255,255,0.1)  80%,
-      transparent       100%
-    )
-  `;
-
   return (
     <motion.div
       animate={{
         backdropFilter: visible ? "blur(12px)" : "none",
-        boxShadow: visible
-          ? "0 4px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)"
-          : "none",
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
@@ -194,14 +155,10 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         stiffness: 200,
         damping: 50,
       }}
-      style={{
-        border: "1px solid transparent",
-        backgroundImage: `linear-gradient(${visible ? bgFloating : bgSolid}, ${visible ? bgFloating : bgSolid}), ${borderGradient}`,
-        backgroundOrigin: "border-box",
-        backgroundClip: "padding-box, border-box",
-      }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between px-0 py-2 lg:hidden",
+        "bg-background/95 border border-border",
+        visible && "shadow-lg",
         className,
       )}
     >
@@ -240,7 +197,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-neutral-950 border border-neutral-800 px-4 py-8 shadow-2xl",
+            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-background border border-border px-4 py-8 shadow-2xl",
             className,
           )}
         >
@@ -259,9 +216,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <IconX className="text-foreground" onClick={onClick} />
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <IconMenu2 className="text-foreground" onClick={onClick} />
   );
 };
 
@@ -269,7 +226,7 @@ export const NavbarLogo = () => {
   return (
     <a
       href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-foreground"
     >
       <img
         src="https://assets.aceternity.com/logo-dark.png"
@@ -277,7 +234,7 @@ export const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-black dark:text-white">Startup</span>
+      <span className="font-medium text-foreground">Startup</span>
     </a>
   );
 };
@@ -302,10 +259,10 @@ export const NavbarButton = ({
     "px-4 py-2 rounded-md text-sm font-dogica text-xs tracking-wider relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
   const variantStyles = {
-    primary: "bg-white text-black hover:bg-neutral-200",
-    secondary: "bg-transparent text-white border border-white/20 hover:bg-white/10",
-    dark: "bg-neutral-900 text-white border border-neutral-700 hover:border-neutral-500",
-    gradient: "bg-white text-black hover:bg-neutral-100",
+    primary: "bg-foreground text-background hover:bg-foreground/90",
+    secondary: "bg-transparent text-foreground border border-border hover:bg-accent",
+    dark: "bg-card text-foreground border border-border hover:border-foreground/50",
+    gradient: "bg-foreground text-background hover:bg-foreground/90",
   };
 
   const tagProps: Record<string, unknown> = {

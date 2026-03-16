@@ -57,7 +57,7 @@ const Project = () => {
     }, [projectId]);
 
     return (
-        <div className="text-white max-w-6xl mx-auto px-6 py-10">
+        <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
             <div className="mb-8 flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-dogica tracking-wider">
@@ -70,7 +70,7 @@ const Project = () => {
 
                 <Link
                     to="/dashboard"
-                    className="text-xs font-dogica text-neutral-500 hover:text-white transition-colors"
+                    className="text-xs font-dogica text-neutral-500 hover:text-foreground transition-colors"
                 >
                     ← back to dashboard
                 </Link>
@@ -81,14 +81,14 @@ const Project = () => {
                     {[...Array(3)].map((_, i) => (
                         <div
                             key={i}
-                            className="h-16 rounded-lg border border-neutral-800 bg-neutral-950 animate-pulse"
+                            className="h-16 rounded-lg border border-border bg-card animate-pulse"
                         />
                     ))}
                 </div>
             )}
 
             {!loading && deployments.length === 0 && (
-                <div className="border border-dashed border-neutral-800 rounded-lg p-12 text-center">
+                <div className="border border-dashed border-border rounded-lg p-12 text-center">
                     <p className="text-neutral-600 font-dogica text-xs">
                         no deployments yet for this project
                     </p>
@@ -101,11 +101,11 @@ const Project = () => {
                         <Link
                             key={deployment.id}
                             to={`/deployments/${deployment.id}`}
-                            className="flex items-center justify-between border border-neutral-800 bg-neutral-950 rounded-lg px-5 py-3 hover:border-neutral-600 hover:bg-neutral-900/50 transition-all duration-200"
+                            className="flex items-center justify-between border border-border bg-card rounded-lg px-5 py-3 hover:bg-muted/50 transition-all duration-200"
                         >
                             <div className="flex flex-col gap-1">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-sm font-mono text-neutral-300">
+                                    <span className="text-sm font-mono text-foreground">
                                         deployment #{deployment.id}
                                     </span>
                                     <span

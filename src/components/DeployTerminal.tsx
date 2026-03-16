@@ -43,17 +43,17 @@ const DeployTerminal = ({
     const canDeploy = selectedBranch && projectName && projectUrl;
 
     return (
-        <div className="border border-neutral-800 rounded-lg overflow-hidden">
+        <div className="border border-border rounded-lg overflow-hidden bg-card">
             <TerminalHeader title={`gitdrop deploy ${selectedRepo.name}`} />
 
-            <div className="bg-neutral-950 p-6">
+            <div className="p-6">
                 {/* Repo info bar */}
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-neutral-800">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
                     <span className="text-lg">
                         {selectedRepo.private ? "🔒" : "📦"}
                     </span>
                     <div>
-                        <p className="text-sm text-white font-mono">
+                        <p className="text-sm text-foreground font-mono">
                             {selectedRepo.owner.login}/{selectedRepo.name}
                         </p>
                         <p className="text-[10px] text-neutral-500 font-dogica">
@@ -81,15 +81,15 @@ const DeployTerminal = ({
                 />
 
                 {/* Deploy Button */}
-                <div className="mt-8 pt-4 border-t border-neutral-800">
+                <div className="mt-8 pt-4 border-t border-border">
                     <button
                         disabled={!canDeploy}
                         onClick={onDeploy}
                         className={`px-5 py-2.5 border font-dogica text-xs transition-all duration-200 rounded
                         ${
                             canDeploy
-                                ? "border-white/30 text-white hover:bg-white hover:text-black cursor-pointer"
-                                : "border-neutral-700 text-neutral-600 cursor-not-allowed"
+                                ? "border-border text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+                                : "border-border text-muted-foreground cursor-not-allowed opacity-60"
                         }`}
                     >
                         <span className="mr-2">▶</span>

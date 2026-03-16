@@ -87,7 +87,7 @@ const Dashboard = () => {
     }, [projects]);
 
     return (
-        <div className="text-white max-w-6xl mx-auto px-6 py-10">
+        <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
             {/* Header */}
             <div className="flex items-end justify-between mb-10">
                 <div>
@@ -102,7 +102,7 @@ const Dashboard = () => {
 
                 <Link
                     to="/deploy"
-                    className="px-4 py-2 border border-white/30 text-white font-dogica text-xs hover:bg-white hover:text-black transition-all duration-200"
+                    className="px-4 py-2 border border-border text-foreground font-dogica text-xs hover:bg-accent hover:text-accent-foreground transition-all duration-200"
                 >
                     + New Deploy
                 </Link>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                     {[...Array(3)].map((_, i) => (
                         <div
                             key={i}
-                            className="h-20 rounded-lg border border-neutral-800 bg-neutral-950 animate-pulse"
+                            className="h-20 rounded-lg border border-border bg-card animate-pulse"
                         />
                     ))}
                 </div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
 
             {/* Empty state */}
             {!loading && projects.length === 0 && (
-                <div className="border border-dashed border-neutral-800 rounded-lg p-16 text-center">
+                <div className="border border-dashed border-border rounded-lg p-16 text-center">
                     <p className="text-neutral-600 font-dogica text-xs">
                         no projects yet — deploy one
                     </p>
@@ -144,7 +144,7 @@ const Dashboard = () => {
                         return (
                             <div
                                 key={project.id}
-                                className="border border-neutral-800 bg-neutral-950 rounded-lg px-5 py-4 flex items-center justify-between hover:border-neutral-600 hover:bg-neutral-900/50 transition-all duration-200"
+                                className="border border-border bg-card rounded-lg px-5 py-4 flex items-center justify-between hover:bg-muted/50 transition-all duration-200"
                             >
                                 {/* Left side */}
                                 <Link
@@ -157,7 +157,7 @@ const Dashboard = () => {
 
                                     <div className="min-w-0">
                                         <div className="flex items-center gap-2">
-                                            <span className="text-white text-sm font-medium group-hover:text-white transition-colors">
+                                            <span className="text-foreground text-sm font-medium transition-colors">
                                                 {project.name}
                                             </span>
 
@@ -196,13 +196,13 @@ const Dashboard = () => {
                                             to={`https://${project.url}.localhost`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-[11px] font-mono text-neutral-500 hover:text-white transition-colors"
+                                            className="text-[11px] font-mono text-neutral-500 hover:text-foreground transition-colors"
                                         >
                                             {project.url} ↗
                                         </Link>
                                     )}
 
-                                    <span className="text-[10px] font-dogica px-2 py-0.5 border border-neutral-800 text-neutral-600 rounded">
+                                    <span className="text-[10px] font-dogica px-2 py-0.5 border border-border text-neutral-600 rounded">
                                         {project.type}
                                     </span>
                                 </div>

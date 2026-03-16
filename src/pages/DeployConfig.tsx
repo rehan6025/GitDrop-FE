@@ -78,7 +78,7 @@ const DeployConfig = () => {
 
     if (!repo) {
         return (
-            <div className="text-white max-w-6xl mx-auto px-6 py-10">
+            <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
                 {/* Loading skeleton */}
                 <div className="mb-8 flex items-center justify-between">
                     <div>
@@ -86,11 +86,11 @@ const DeployConfig = () => {
                         <div className="h-4 w-32 mt-2 bg-neutral-800 rounded animate-pulse" />
                     </div>
                 </div>
-                <div className="border border-neutral-800 rounded-lg overflow-hidden">
-                    <div className="h-10 bg-neutral-900 border-b border-neutral-800 animate-pulse" />
-                    <div className="bg-neutral-950 p-6 space-y-4">
+                <div className="border border-border rounded-lg overflow-hidden">
+                    <div className="h-10 bg-muted border-b border-border animate-pulse" />
+                    <div className="bg-card p-6 space-y-4">
                         {[...Array(4)].map((_, i) => (
-                            <div key={i} className="h-10 bg-neutral-900 rounded animate-pulse" />
+                            <div key={i} className="h-10 bg-muted rounded animate-pulse" />
                         ))}
                     </div>
                 </div>
@@ -99,7 +99,7 @@ const DeployConfig = () => {
     }
 
     return (
-        <div className="text-white max-w-6xl mx-auto px-6 py-10">
+        <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
             {/* Header */}
             <div className="mb-8 flex items-center justify-between">
                 <div>
@@ -113,7 +113,7 @@ const DeployConfig = () => {
 
                 <Link
                     to="/deploy"
-                    className="text-xs font-dogica text-neutral-500 hover:text-white transition-colors"
+                    className="text-xs font-dogica text-neutral-500 hover:text-foreground transition-colors"
                 >
                     ← select different repo
                 </Link>

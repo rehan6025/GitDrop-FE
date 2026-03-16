@@ -19,9 +19,12 @@ const BranchSelector = ({
     return (
         <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
-                <span className="text-white/60 font-mono text-sm">$</span>
+                <span className="text-muted-foreground/80 font-mono text-sm">
+                    $
+                </span>
                 <span className="font-dogica text-xs text-neutral-400">
-                    select branch for <span className="text-white">{repoName}</span>
+                    select branch for{" "}
+                    <span className="text-foreground">{repoName}</span>
                 </span>
             </div>
 
@@ -33,11 +36,11 @@ const BranchSelector = ({
                         className={`w-full text-left px-4 py-2.5 text-sm border rounded transition-all duration-200 font-mono
                         ${
                             selectedBranch === branch.name
-                                ? "border-white/30 bg-white/5 text-white"
-                                : "border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-neutral-300"
+                                ? "border-border bg-muted text-foreground"
+                                : "border-border text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                         }`}
                     >
-                        <span className="text-neutral-500">⎇</span>{" "}
+                        <span className="text-muted-foreground">⎇</span>{" "}
                         {branch.name}
                         {branch.sha && (
                             <span className="text-neutral-600 text-xs ml-2">
