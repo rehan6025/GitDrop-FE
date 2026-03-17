@@ -51,12 +51,9 @@ export default function AppNavbar() {
                     <NavbarButton
                         variant="secondary"
                         onClick={cyclePreference}
-                        className="flex items-center gap-2"
+                        className="flex select-none items-center gap-2"
                     >
                         <ThemeIcon size={16} />
-                        <span className="font-dogica text-xs tracking-wider">
-                            {preference[0]!.toUpperCase() + preference.slice(1)}
-                        </span>
                     </NavbarButton>
 
                     {loggedIn ? (

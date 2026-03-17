@@ -34,9 +34,9 @@ function App() {
             <AuthProvider>
                 <UnauthorizedListener />
                 <Routes>
+                    <Route path="/" element={<Home />} />
                     {/* pages with navbar (public + authed) */}
-                    <Route path="/" element={<MainLayout />}>
-                        <Route index element={<Home />} />
+                    <Route element={<MainLayout />}>
                         <Route
                             path="dashboard"
                             element={

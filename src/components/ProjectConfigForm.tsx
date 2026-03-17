@@ -108,7 +108,9 @@ const ProjectConfigForm = ({
                                         : "text-neutral-600"
                                 }`}
                             >
-                                {type === "REACT" ? "Vite / Next" : "HTML / vanilla"}
+                                {type === "REACT"
+                                    ? "Vite / CRA"
+                                    : "HTML / vanilla"}
                             </span>
                         </button>
                     ))}
