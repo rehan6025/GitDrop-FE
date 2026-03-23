@@ -11,7 +11,7 @@ const Home = () => {
         if (status === "authenticated") {
             navigate("/dashboard");
         } else {
-            navigate("/auth/github");
+            navigate("/login");
         }
     };
 
@@ -20,7 +20,7 @@ const Home = () => {
             <AppNavbar />
             <div className="absolute inset-0 h-full w-full bg-[radial-gradient(#b6bcc8_1px,transparent_1px)] bg-size-[28px_28px] "></div>
 
-            <div className="flex flex-col items-center justify-center h-full text-center gap-6 z-10">
+            <div className="flex flex-col items-center justify-center h-full text-center gap-6 z-10 selection:bg-zinc-400">
                 <h1 className="text-7xl md:text-9xl font-bold tracking-widest z-10 text-foreground">
                     GITDROP
                 </h1>

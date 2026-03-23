@@ -30,7 +30,7 @@ export default function AppNavbar() {
 
     return (
         <Navbar className="border-border">
-            <NavBody className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center  justify-between">
+            <NavBody className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center selection:bg-gray-300 justify-between">
                 <Link
                     to="/"
                     className="font-dogica text-lg text-foreground tracking-wider hover:text-foreground/80 transition-colors flex items-center gap-2"
