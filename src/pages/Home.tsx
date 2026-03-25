@@ -3,6 +3,7 @@ import { useAuth } from "@/auth/auth";
 import AppNavbar from "@/components/MainNavbar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import DeployDome from "@/components/DeployDome";
 
 const Home = () => {
     const { status } = useAuth();
@@ -13,10 +14,6 @@ const Home = () => {
         else navigate("/login");
     };
 
-    /* ─────────────────────────────────────────────
-       Hero SVG — "Deploy Orbit"
-       Pure lines + currentColor → light & dark ✓
-    ───────────────────────────────────────────── */
     const DeployOrbit = () => {
         const cx = 200,
             cy = 200,
@@ -385,7 +382,7 @@ const Home = () => {
 
         return (
             <div className="relative w-full max-w-xs">
-                <div className="absolute inset-0 bg-muted/30 rounded-2xl border border-border/50" />
+                <div className="absolute inset-0 bg-muted/80 rounded-2xl border border-border/50" />
                 <div className="relative p-8">
                     <div className="text-center mb-6">
                         <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
@@ -511,7 +508,7 @@ const Home = () => {
     );
 
     return (
-        <div className="relative min-h-screen w-full bg-background">
+        <div className="relative  min-h-screen w-full bg-background">
             <AppNavbar />
 
             {/* Dot pattern fixed — covers entire viewport always */}
@@ -525,7 +522,7 @@ const Home = () => {
             />
 
             {/* ── HERO ── */}
-            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full text-center gap-6 px-4 selection:bg-zinc-400">
+            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full text-center gap-6 px-4 ">
                 <h1 className="text-5xl md:text-8xl font-bold tracking-widest text-foreground">
                     GITDROP
                 </h1>
@@ -583,7 +580,7 @@ const Home = () => {
                                 },
                             ].map(({ Icon, title, desc }, i) => (
                                 <div key={i} className="flex items-start gap-3">
-                                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                                    <div className="shrink-0 w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
                                         <Icon className="text-foreground" />
                                     </div>
                                     <div>
@@ -600,11 +597,15 @@ const Home = () => {
                     </div>
 
                     {/* RIGHT — orbit + pipeline */}
-                    <div className="flex flex-col items-center gap-9 p-16  ">
+                    <div className="flex flex-row items-center gap-9 p-16  ">
                         <DeployOrbit />
                         {/* <DeploymentFlow /> */}
                     </div>
                 </div>
+            </section>
+
+            <section className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
+                <DeployDome />
             </section>
         </div>
     );
