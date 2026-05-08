@@ -1,6 +1,7 @@
 // src/pages/Home.tsx
 import { useAuth } from "@/auth/auth";
 import AppNavbar from "@/components/MainNavbar";
+import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DeployDome from "@/components/DeployDome";
@@ -528,7 +529,7 @@ const Home = () => {
                 </h1>
                 <p className="backdrop-blur-sm text-muted-foreground max-w-xl">
                     Deploy your GitHub projects instantly. Like Vercel — but
-                    built by you.
+                    with no limits.
                 </p>
                 <div className="flex gap-4">
                     <button
@@ -607,6 +608,8 @@ const Home = () => {
             <section className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
                 <DeployDome />
             </section>
+
+            <Footer />
         </div>
     );
 };
