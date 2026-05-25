@@ -155,6 +155,17 @@ export const api = {
 
             return response.json();
         },
+        getDeploymentAnalysis: async (
+            deploymentId: number,
+        ): Promise<string[]> => {
+            const response = await fetchWithAuth(
+                `${API_BASE_URL}/deployment/${deploymentId}/analyze`,
+            );
+
+            if (!response.ok) throw new Error("Failed to fetch logs");
+
+            return response.json();
+        },
         getStatus: async (deploymentId: number): Promise<string> => {
             const response = await fetchWithAuth(
                 `${API_BASE_URL}/deployment/${deploymentId}/status`,

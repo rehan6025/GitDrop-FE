@@ -41,6 +41,12 @@ const Deployment = () => {
         }
     }, [logs]);
 
+    const analyzeLog = async (deploymentId: number) => {
+        const res = await api.deployments.getDeploymentAnalysis(deploymentId);
+
+        console.log(res);
+    };
+
     useEffect(() => {
         const fetchLogs = async () => {
             try {
@@ -255,6 +261,9 @@ const Deployment = () => {
                         <span className="text-[11px] text-neutral-600 font-mono">
                             {logs.length} log entries
                         </span>
+                        <button onClick={() => analyzeLog(deploymentId)}>
+                            analyze
+                        </button>
                     </div>
                 </div>
             )}
