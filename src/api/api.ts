@@ -79,6 +79,14 @@ const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     return response;
 };
 
+export interface PaginatedResponseRepos {
+    page: number;
+    limit: number;
+    count: number;
+    hasNextPage: boolean;
+    repos: Repository[];
+}
+
 export const api = {
     auth: {
         loginWithGitHub: () => {
@@ -114,9 +122,12 @@ export const api = {
     },
 
     github: {
-        getRepositories: async (): Promise<Repository[]> => {
+        getRepositories: async (
+            page: number = 1,
+            limit: number = 20,
+        ): Promise<PaginatedResponseRepos> => {
             const response = await fetchWithAuth(
-                `${API_BASE_URL}/github/repos`,
+                `${API_BASE_URL}/github/repos?page=${page}&limit=${limit}`,
             );
             if (!response.ok) {
                 throw new Error("Failed to fetch repositories");

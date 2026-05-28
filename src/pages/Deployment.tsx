@@ -261,8 +261,10 @@ const Deployment = () => {
                         <span className="text-[11px] text-neutral-600 font-mono">
                             {logs.length} log entries
                         </span>
-                        <button onClick={() => analyzeLog(deploymentId)}>
-                            analyze
+                        <button
+                            onClick={() => analyzeLog(Number(deploymentId))}
+                        >
+                            Analyze
                         </button>
                     </div>
                 </div>

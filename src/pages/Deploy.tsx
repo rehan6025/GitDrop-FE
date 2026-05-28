@@ -1,4 +1,4 @@
-import { api, type Repository } from "@/api/api";
+import { api, type PaginatedResponseRepos, type Repository } from "@/api/api";
 import { useEffect, useState } from "react";
 import RepoCard from "@/components/RepoCard";
 import { useNavigate, Link } from "react-router-dom";
@@ -6,13 +6,19 @@ import { useNavigate, Link } from "react-router-dom";
 const Deploy = () => {
     const [repos, setRepos] = useState<Repository[]>([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [hasPage, setHasPage] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const data = await api.github.getRepositories();
-                setRepos(data);
+                const data: PaginatedResponseRepos =
+                    await api.github.getRepositories(page, 20);
+                console.log(data);
+                setHasPage(data.hasNextPage);
+                setRepos(data.repos);
             } catch (error) {
                 console.error("Error fetching repositories:", error);
             } finally {
@@ -21,7 +27,7 @@ const Deploy = () => {
         };
 
         fetchData();
-    }, []);
+    }, [page]);
 
     return (
         <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
@@ -77,6 +83,26 @@ const Deploy = () => {
                     ))}
                 </div>
             )}
+
+            <div className="flex justify-center gap-4 mt-8 font-dogica text-xs">
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage((p) => p - 1)}
+                    className="text-white disabled:text-gray-700"
+                >
+                    Previous
+                </button>
+
+                <span> {page}</span>
+
+                <button
+                    disabled={hasPage === false}
+                    onClick={() => setPage((p) => p + 1)}
+                    className="text-white disabled:text-gray-700"
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };
