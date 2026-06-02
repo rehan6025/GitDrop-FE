@@ -174,8 +174,9 @@ export const api = {
             );
 
             if (!response.ok) throw new Error("Failed to fetch logs");
-
-            return response.json();
+            let data = await response.json();
+            console.log(data);
+            return data;
         },
         getStatus: async (deploymentId: number): Promise<string> => {
             const response = await fetchWithAuth(

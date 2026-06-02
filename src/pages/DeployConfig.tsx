@@ -19,8 +19,13 @@ const DeployConfig = () => {
     useEffect(() => {
         const fetchRepoAndBranches = async () => {
             try {
-                const repos = await api.github.getRepositories();
-                const foundRepo = repos.find((r) => r.name === repoName);
+                const reposResp: any = await api.github.getRepositories();
+                // api.github.getRepositories returns a paginated object { repos: Repository[] }
+                const reposList: any[] = Array.isArray(reposResp)
+                    ? reposResp
+                    : reposResp?.repos || [];
+
+                const foundRepo = reposList.find((r) => r.name === repoName);
 
                 if (!foundRepo) return;
 
@@ -90,7 +95,10 @@ const DeployConfig = () => {
                     <div className="h-10 bg-muted border-b border-border animate-pulse" />
                     <div className="bg-card p-6 space-y-4">
                         {[...Array(4)].map((_, i) => (
-                            <div key={i} className="h-10 bg-muted rounded animate-pulse" />
+                            <div
+                                key={i}
+                                className="h-10 bg-muted rounded animate-pulse"
+                            />
                         ))}
                     </div>
                 </div>

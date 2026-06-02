@@ -1,6 +1,7 @@
 import { api } from "@/api/api";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import AIAnalyzeButton from "@/components/AIAnalyzeButton";
 
 type DeploymentStatus =
     | "NOT_STARTED"
@@ -41,12 +42,6 @@ const Deployment = () => {
         }
     }, [logs]);
 
-    const analyzeLog = async (deploymentId: number) => {
-        const res = await api.deployments.getDeploymentAnalysis(deploymentId);
-
-        console.log(res);
-    };
-
     useEffect(() => {
         const fetchLogs = async () => {
             try {
@@ -82,12 +77,14 @@ const Deployment = () => {
 
         fetchLogs();
         fetchStatus();
+        console.log("fetching logs, and status");
     }, [deploymentId]);
 
     useEffect(() => {
         const ws = new WebSocket("ws://localhost:3000/ws/deployments");
 
         ws.onopen = () => {
+            console.log(" sending ws subscribe msg: ", Date.now());
             ws.send(
                 JSON.stringify({
                     type: "subscribe",
@@ -98,6 +95,7 @@ const Deployment = () => {
 
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);
+            console.log("received msg from ws conn::", Date.now());
 
             if (msg.event === "deployment-update") {
                 const data = msg.data;
@@ -236,36 +234,38 @@ const Deployment = () => {
 
                     {/* Status bar */}
                     <div className="h-7 bg-background border-t border-border flex items-center justify-between px-3">
-                        <div className="flex items-center gap-2">
-                            <span
-                                className={`w-2 h-2 rounded-full ${
-                                    status === "READY"
-                                        ? "bg-emerald-500"
-                                        : status === "FAIL"
-                                          ? "bg-red-500"
-                                          : status === "IN_PROGRESS"
-                                            ? "bg-yellow-500 animate-pulse"
-                                            : "bg-neutral-600"
-                                }`}
-                            />
-                            <span className="text-[11px] text-neutral-500 font-mono">
-                                {status === "IN_PROGRESS"
-                                    ? "building..."
-                                    : status === "READY"
-                                      ? "ready"
-                                      : status === "FAIL"
-                                        ? "failed"
-                                        : "queued"}
-                            </span>
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2">
+                                <span
+                                    className={`w-2 h-2 rounded-full ${
+                                        status === "READY"
+                                            ? "bg-emerald-500"
+                                            : status === "FAIL"
+                                              ? "bg-red-500"
+                                              : status === "IN_PROGRESS"
+                                                ? "bg-yellow-500 animate-pulse"
+                                                : "bg-neutral-600"
+                                    }`}
+                                />
+                                <span className="text-[11px] text-neutral-500 font-mono">
+                                    {status === "IN_PROGRESS"
+                                        ? "building..."
+                                        : status === "READY"
+                                          ? "ready"
+                                          : status === "FAIL"
+                                            ? "failed"
+                                            : "queued"}
+                                </span>
+                            </div>
+                            {status === "FAIL" && (
+                                <AIAnalyzeButton
+                                    deploymentId={Number(deploymentId)}
+                                />
+                            )}
                         </div>
                         <span className="text-[11px] text-neutral-600 font-mono">
                             {logs.length} log entries
                         </span>
-                        <button
-                            onClick={() => analyzeLog(Number(deploymentId))}
-                        >
-                            Analyze
-                        </button>
                     </div>
                 </div>
             )}

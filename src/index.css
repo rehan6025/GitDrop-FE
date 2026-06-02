@@ -25,10 +25,33 @@
 
 @theme {
     --animate-dash-flow: dashFlow 2s linear infinite;
+    --animate-spotlight: spotlight 2s ease 0.25s infinite;
+    --animate-loader: loaderSpin 1s linear infinite;
 
     @keyframes dashFlow {
         to {
             stroke-dashoffset: -20;
+        }
+    }
+
+    @keyframes spotlight {
+        0% {
+            opacity: 0;
+            transform: translate(-72%, -62%) scale(0.5);
+        }
+        50% {
+            opacity: 1;
+            transform: translate(-50%, -40%) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-10%, -20%) scale(0.5);
+        }
+    }
+
+    @keyframes loaderSpin {
+        to {
+            transform: rotate(360deg);
         }
     }
 }
@@ -162,4 +185,15 @@
   html {
     @apply font-sans;
     }
+}
+
+@layer components {
+  .loader {
+    width: 24px;
+    height: 24px;
+    border: 2px solid oklch(0.708 0 0);
+    border-top-color: oklch(0.87 0.00 0);
+    border-radius: 50%;
+    animation: loaderSpin 1s linear infinite;
+  }
 }
