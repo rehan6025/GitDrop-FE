@@ -34,6 +34,11 @@ const Deployment = () => {
     const [status, setStatus] = useState<DeploymentStatus>("QUEUED");
     const [loading, setLoading] = useState(true);
 
+    const [currentStage, setCurrentStage] = useState<string | null>(null);
+    const stages = ["CLONING", "INSTALLING", "BUILDING", "COPYING", "DONE"];
+
+    const [showRawLogs, setShowRawLogs] = useState<boolean>(false);
+
     // Auto-scroll logs to bottom
     useEffect(() => {
         if (logContainerRef.current) {
@@ -77,14 +82,12 @@ const Deployment = () => {
 
         fetchLogs();
         fetchStatus();
-        console.log("fetching logs, and status");
     }, [deploymentId]);
 
     useEffect(() => {
         const ws = new WebSocket("ws://localhost:3000/ws/deployments");
 
         ws.onopen = () => {
-            console.log(" sending ws subscribe msg: ", Date.now());
             ws.send(
                 JSON.stringify({
                     type: "subscribe",
@@ -95,7 +98,6 @@ const Deployment = () => {
 
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);
-            console.log("received msg from ws conn::", Date.now());
 
             if (msg.event === "deployment-update") {
                 const data = msg.data;
@@ -108,10 +110,26 @@ const Deployment = () => {
                     setStatus(data.status);
                 }
             }
+
+            if (msg.event === "deployment-status") {
+                const data = msg.data;
+                console.log("STAGE EVENT", data);
+                if (data.type === "status") {
+                    setCurrentStage(data.status);
+                }
+            }
         };
 
         return () => ws.close();
     }, [deploymentId]);
+
+    const currentIndex =
+        currentStage !== null ? stages.indexOf(currentStage) : 0;
+
+    const completedStages =
+        currentIndex > 0 ? stages.slice(0, currentIndex) : [];
+
+    console.log("CURRENT STAGE", currentStage);
 
     return (
         <div className="text-foreground max-w-6xl mx-auto px-6 py-10">
@@ -176,11 +194,21 @@ const Deployment = () => {
                             build.log
                         </span>
                     </div>
+                    <div className="flex bg-muted justify-end w-full">
+                        <button
+                            onClick={() => setShowRawLogs((prev) => !prev)}
+                            className="text-xs text-neutral-400"
+                        >
+                            {showRawLogs
+                                ? "Hide Raw Logs ▲"
+                                : "View Raw Logs ▼"}
+                        </button>
+                    </div>
 
                     {/* Terminal body */}
                     <div
                         ref={logContainerRef}
-                        className="bg-card p-4 h-[500px] overflow-y-auto font-mono text-[13px] leading-relaxed"
+                        className="bg-card p-4 h-125 overflow-y-auto font-mono text-[13px] leading-relaxed"
                     >
                         {/* Initial prompt */}
                         <div className="text-emerald-500 mb-3">
@@ -197,17 +225,37 @@ const Deployment = () => {
                             </div>
                         )}
 
-                        {logs.map((log, i) => (
-                            <div
-                                key={i}
-                                className="text-foreground whitespace-pre-wrap break-all"
-                            >
-                                <span className="text-foreground select-none mr-2">
-                                    [{String(i + 1).padStart(3, "0")}]
-                                </span>
-                                {log}
-                            </div>
-                        ))}
+                        <div className="space-y-2">
+                            {stages.map((stage) => {
+                                const isCompleted =
+                                    completedStages.includes(stage);
+                                const isCurrent = currentStage === stage;
+
+                                return (
+                                    <div key={stage}>
+                                        {isCompleted
+                                            ? "✓"
+                                            : isCurrent
+                                              ? "🔨"
+                                              : "□"}{" "}
+                                        {stage}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {showRawLogs &&
+                            logs.map((log, i) => (
+                                <div
+                                    key={i}
+                                    className="text-foreground whitespace-pre-wrap break-all"
+                                >
+                                    <span className="text-foreground select-none mr-2">
+                                        [{String(i + 1).padStart(3, "0")}]
+                                    </span>
+                                    {log}
+                                </div>
+                            ))}
 
                         {/* Cursor when in progress */}
                         {status === "IN_PROGRESS" && (
