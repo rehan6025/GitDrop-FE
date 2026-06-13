@@ -3,7 +3,6 @@ import { useAuth } from "@/auth/auth";
 import AppNavbar from "@/components/MainNavbar";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import DeployDome from "@/components/DeployDome";
 
 const Home = () => {
@@ -342,20 +341,6 @@ const Home = () => {
     };
 
     /* ── Pipeline stepper (unchanged logic) ── */
-    const CheckIcon = () => (
-        <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <polyline points="20 6 9 17 4 12" />
-        </svg>
-    );
 
     const LightningIcon = ({ className }: { className?: string }) => (
         <svg
